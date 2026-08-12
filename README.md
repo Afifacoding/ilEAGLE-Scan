@@ -53,26 +53,39 @@ Custom JavaScript static-analysis heuristics.
 ```text
 IlEAGLE-Scan/
 
-├── frontend/
-
-│   ├── public/
-│   │   └── assets/
-│   │       ├── eagle-logo.png
-│   │       ├── intro-desktop.mp4
-│   │       └── intro-mobile.mp4
+ilEAGLE-Scan/
 │
-│   ├── src/
-│   │   ├── main.jsx
-│   │   └── styles.css
-│
-│   ├── index.html
-│   └── package.json
+├── .git/
+├── README.md
+├── package-lock.json
 │
 ├── backend/
-│   ├── src/
-│   │   └── scanner.js
-│   │
+│   ├── package.json
+│   ├── package-lock.json
 │   ├── server.js
-│   └── package.json
+│   │
+│   └── src/
+│       └── scanner.js
 │
-└── README.md
+└── frontend/
+    ├── index.html
+    ├── package.json
+    ├── package-lock.json
+    │
+    ├── src/
+    │   ├── main.jsx
+    │   ├── Analyzer.jsx
+    │   └── styles.css
+    │
+    ├── public/
+    │   └── assets/
+    │       ├── eagle-logo.png
+    │       ├── intro-desktop.mp4
+    │       └── intro-mobile.mp4
+    │
+    └── dist/
+        ├── index.html
+        └── assets/
+            ├── eagle-logo.png
+            ├── intro-desktop.mp4
+            └── intro-mobile.mp4
