@@ -188,7 +188,7 @@ function IntroScreen({ onComplete }) {
   const videoRef = useRef(null);
   const completedRef = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
-  const [videoSrc, setVideoSrc] = useState("/assets/intro-desktop.mp4");
+  const [videoSrc, setVideoSrc] =useState(`${import.meta.env.BASE_URL}assets/intro-desktop.mp4`) ;
 
   const completeIntro = () => {
     if (completedRef.current) {
@@ -204,8 +204,8 @@ function IntroScreen({ onComplete }) {
     const pickSource = () => {
       setVideoSrc(
         mediaQuery.matches
-          ? "/assets/intro-mobile.mp4"
-          : "/assets/intro-desktop.mp4"
+          ? `${import.meta.env.BASE_URL}assets/intro-mobile.mp4`
+          : `${import.meta.env.BASE_URL}assets/intro-desktop.mp4`
       );
     };
 
@@ -234,62 +234,22 @@ function IntroScreen({ onComplete }) {
     video.defaultMuted = true;
     video.playsInline = true;
 
-    const tryPlay = () => {
+    const handleCanPlay = () => {
+      setVideoReady(true);
       const playPromise = video.play();
       if (playPromise && typeof playPromise.catch === "function") {
         playPromise.catch(() => {
-          // Retry via listeners/timer if the browser temporarily blocks autoplay.
+          // Some browsers may still block autoplay in edge cases.
         });
       }
     };
 
-    const markReady = () => setVideoReady(true);
-    const onCanPlay = () => {
-      markReady();
-      tryPlay();
-    };
-
-    const onVisibility = () => {
-      if (!document.hidden) {
-        tryPlay();
-      }
-    };
-
-    const onInteraction = () => {
-      tryPlay();
-    };
-
-    video.addEventListener("loadeddata", markReady);
-    video.addEventListener("canplay", onCanPlay);
-    document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("pointerdown", onInteraction, { once: true });
-    window.addEventListener("keydown", onInteraction, { once: true });
+    video.addEventListener("canplay", handleCanPlay);
 
     video.load();
 
-    let attempts = 0;
-    const retryTimer = window.setInterval(() => {
-      attempts += 1;
-      tryPlay();
-      if (!video.paused || attempts >= 16) {
-        window.clearInterval(retryTimer);
-      }
-    }, 250);
-
-    const fallbackTimer = window.setTimeout(() => {
-      completeIntro();
-    }, 13000);
-
-    tryPlay();
-
     return () => {
-      window.clearInterval(retryTimer);
-      window.clearTimeout(fallbackTimer);
-      video.removeEventListener("loadeddata", markReady);
-      video.removeEventListener("canplay", onCanPlay);
-      document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("pointerdown", onInteraction);
-      window.removeEventListener("keydown", onInteraction);
+      video.removeEventListener("canplay", handleCanPlay);
     };
   }, [videoSrc]);
 
@@ -421,7 +381,7 @@ function Header({ page, setPage, theme, setTheme }) {
 
         <button className="brand" onClick={() => navigate("analyzer")}>
           <div className="brand-logo">
-            <img src="/assets/eagle-logo.png" alt="IlEAGLE Scan" />
+            <img src={`${import.meta.env.BASE_URL}assets/eagle-logo.png`} alt="IlEAGLE Scan" />
           </div>
           <div className="brand-name">
             IlEAGLE <strong>Scan</strong>
@@ -608,7 +568,7 @@ fetch("https://example.com/upload", {
           <div className="hero-visual">
             <div className="eagle-card">
               <div className="scan-line"></div>
-              <img src="/assets/eagle-logo.png" alt="IlEAGLE security eagle" />
+              <img src={`${import.meta.env.BASE_URL}assets/eagle-logo.png`} alt="IlEAGLE security eagle" />
               <div className="eagle-card-footer">
                 <span>IL EAGLE SECURITY CORE</span>
                 <span className="online">
@@ -940,7 +900,7 @@ function About() {
 
       <section className="page-hero about-hero">
         <div className="about-logo">
-          <img src="/assets/eagle-logo.png" alt="IlEAGLE Scan" />
+          <img src={`${import.meta.env.BASE_URL}assets/eagle-logo.png`} alt="IlEAGLE Scan" />
         </div>
 
         <div>
@@ -1108,7 +1068,7 @@ function Footer({ setPage }) {
     <footer className="site-footer">
 
       <div className="footer-brand">
-        <img src="/assets/eagle-logo.png" alt="" />
+        <img src={`${import.meta.env.BASE_URL}assets/eagle-logo.png`} alt="" />
         <div>
           <strong>IlEAGLE Scan</strong>
           <span>Defensive cybersecurity analysis.</span>
