@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://ileagle-scan-backend.onrender.com";
 
 function Icon({ name, size = 22 }) {
   const icons = {
