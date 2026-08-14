@@ -91,7 +91,7 @@ export function Analyzer() {
     setReport(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/scan", {
+      const response = await fetch("https://ileagle-scan-backend.onrender.com/api/scan", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
